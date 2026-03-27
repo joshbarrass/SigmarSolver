@@ -30,3 +30,7 @@ add_library(sigmarsolver SHARED ${sources} ${headers})
 set_property(TARGET sigmarsolver PROPERTY POSITION_INDEPENDENT_CODE ON)
 set_target_properties(sigmarsolver PROPERTIES PREFIX "lib")
 #target_link_libraries(sigmarsolver)
+
+# build test binary
+add_executable(test test.cpp ${headers})
+target_link_libraries(test sigmarsolver)
