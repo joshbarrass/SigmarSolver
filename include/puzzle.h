@@ -4,15 +4,18 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <stack>
 #include "tile.h"
 
 typedef std::pair<Coord, Tile> PlacedTile;
 typedef std::pair<PlacedTile, PlacedTile> Move;
+typedef std::pair<bool, std::vector<Move>> Solution;
 
 class SigmarsGarden {
 public:
   SigmarsGarden(){}
   SigmarsGarden(const SigmarsGarden &sg);
+  SigmarsGarden(const SigmarsGarden *sg);
   ~SigmarsGarden();
 
   Tile getTileAt(const Coord &c) const;
@@ -32,7 +35,13 @@ public:
   void doMove(const Move m);
   void undoMove(const Move m);
 
+  bool is_solved() const;
+
+  Solution solve() const;
+
 private:
+  bool solver_internal(std::stack<Move>&);
+
   std::unordered_map<Coord, Tile> tiles;
 };
 

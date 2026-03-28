@@ -7,6 +7,12 @@ SigmarsGarden::SigmarsGarden(const SigmarsGarden &sg) {
   }
 }
 
+SigmarsGarden::SigmarsGarden(const SigmarsGarden *sg) {
+  for (const auto &entry : sg->tiles) {
+    tiles[entry.first] = entry.second;
+  }
+}
+
 SigmarsGarden::~SigmarsGarden() {}
 
 Tile SigmarsGarden::getTileAt(const Coord &c) const {
