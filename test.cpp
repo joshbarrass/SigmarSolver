@@ -16,5 +16,21 @@ int main() {
 
   std::cout << TILE_GOLD << " is metal? " << is_metal(TILE_GOLD) << std::endl;
   std::cout << TILE_WATER << " is metal? " << is_metal(TILE_WATER) << std::endl;
+
+  TileType m = TILE_TIN;
+  std::cout << "Metal sequence: ";
+  for (size_t i = 0; i < 6; ++i) {
+    std::cout << m << " ";
+    m = get_next_metal(m);
+  }
+  std::cout << std::endl;
+  m = TILE_GOLD;
+  std::cout << "Metal sequence: ";
+  for (size_t i = 0; i < 6; ++i) {
+    std::cout << m << " ";
+    m = get_prev_metal(m);
+  }
+  std::cout << std::endl;
+
   return 0;
 }

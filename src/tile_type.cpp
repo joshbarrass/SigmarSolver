@@ -38,3 +38,31 @@ std::ostream &operator<<(std::ostream &os, const TileType &t) {
 bool is_metal(const TileType t) {
   return metal_tiles.count(t) == 1;
 }
+
+// I'm defining these really explicitly. Long, but robust.
+
+TileType get_prev_metal(const TileType t) {
+  switch (t) {
+  case TILE_TIN: return TILE_NONE;
+  case TILE_IRON: return TILE_TIN;
+  case TILE_COPPER: return TILE_IRON;
+  case TILE_SILVER: return TILE_COPPER;
+  case TILE_GOLD: return TILE_SILVER;
+  default:
+    break;
+  }
+  return TILE_NONE;
+}
+
+TileType get_next_metal(const TileType t) {
+  switch (t) {
+  case TILE_TIN: return TILE_IRON;
+  case TILE_IRON: return TILE_COPPER;
+  case TILE_COPPER: return TILE_SILVER;
+  case TILE_SILVER: return TILE_GOLD;
+  case TILE_GOLD: return TILE_NONE;
+  default:
+    break;
+  }
+  return TILE_NONE;
+}
