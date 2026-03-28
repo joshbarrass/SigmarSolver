@@ -123,20 +123,20 @@ std::vector<Move> SigmarsGarden::getAllPossibleMoves() const {
   // loop through all pairs of tiles seeing whether they could be
   // matched with each other. If they can, it's a valid move!
   for (size_t i = 0; i < moveable.size(); ++i) {
-    for (size_t j = i + 1; j < moveable.size(); ++j) {
-      if (moveable[i].second.type + moveable[j].second.type) {
-        const Move move = Move(moveable[i], moveable[j]);
-        moves.push_back(move);
-      }
-    }
-  }
-  // special exception for gold!
-  for (size_t i = 0; i < moveable.size(); ++i) {
+    // special exception for gold!
     if (moveable[i].second.type == TILE_GOLD) {
       const Move move = Move(moveable[i],
                              PlacedTile(moveable[i].first, Tile(TILE_NONE, false))
                              );
       moves.push_back(move);
+      continue;
+    }
+
+    for (size_t j = i + 1; j < moveable.size(); ++j) {
+      if (moveable[i].second.type + moveable[j].second.type) {
+        const Move move = Move(moveable[i], moveable[j]);
+        moves.push_back(move);
+      }
     }
   }
 
