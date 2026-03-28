@@ -66,3 +66,24 @@ TileType get_next_metal(const TileType t) {
   }
   return TILE_NONE;
 }
+
+bool types_can_match(const TileType t1, const TileType t2) {
+  // metal - quicksilver
+  if (is_metal(t1)) {
+    return t2 == TILE_QUICKSILVER;
+  }
+  if (is_metal(t2)) {
+    return t1 == TILE_QUICKSILVER;
+  }
+
+  // if we reach here, neither is metal. Must be basic element, salt,
+  // or quicksilver.
+  // quicksilver only matches with metals
+  if (t1 == TILE_QUICKSILVER || t2 == TILE_QUICKSILVER) {
+    return false;
+  }
+
+  // otherwise, match valid if they're the same or if one of them is
+  // salt
+  return t1 == t2 || t1 == TILE_SALT || t2 == TILE_SALT;
+}

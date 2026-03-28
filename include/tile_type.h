@@ -25,5 +25,6 @@ std::ostream &operator<<(std::ostream &os, const TileType &t);
 bool is_metal(const TileType t);
 TileType get_prev_metal(const TileType t);
 TileType get_next_metal(const TileType t);
+bool types_can_match(const TileType t1, const TileType t2);
 
 #endif
