@@ -20,5 +20,6 @@ enum TileType {
 };
 
 std::ostream &operator<<(std::ostream &os, TileType &t);
+std::ostream &operator<<(std::ostream &os, const TileType &t);
 
 #endif

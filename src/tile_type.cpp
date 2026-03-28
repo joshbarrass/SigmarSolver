@@ -19,9 +19,13 @@ const std::unordered_map<TileType, std::string> tile_type_names{
 };
 
 std::ostream &operator<<(std::ostream &os, TileType &t) {
+  return operator<<(os, const_cast<const TileType &>(t));
+}
+
+std::ostream &operator<<(std::ostream &os, const TileType &t) {
   const auto &s = tile_type_names.find(t);
   if (s == tile_type_names.end()) {
-    os << "UNKNOWN?(" << t << ")";
+    os << "UNKNOWN?(" << static_cast<int>(t) << ")";
   } else {
     os << s->second;
   }
