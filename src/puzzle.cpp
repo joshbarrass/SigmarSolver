@@ -127,3 +127,13 @@ std::vector<Move> SigmarsGarden::getAllPossibleMoves() const {
 
   return moves;
 }
+
+void SigmarsGarden::doMove(const Move m) {
+  tiles[m.first.first].removed = true;
+  tiles[m.second.first].removed = true;
+}
+
+void SigmarsGarden::undoMove(const Move m) {
+  tiles[m.first.first].removed = false;
+  tiles[m.second.first].removed = false;
+}

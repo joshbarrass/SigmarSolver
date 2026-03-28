@@ -29,6 +29,9 @@ public:
   std::vector<PlacedTile> getMoveableTiles() const;
   std::vector<Move> getAllPossibleMoves() const;
 
+  void doMove(const Move m);
+  void undoMove(const Move m);
+
 private:
   std::unordered_map<Coord, Tile> tiles;
 };
