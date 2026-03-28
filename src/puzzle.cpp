@@ -15,8 +15,24 @@ Tile SigmarsGarden::getTileAt(const Coord &c) const {
   return Tile();
 }
 
+Tile SigmarsGarden::getTileAt(const int a, const int b) const {
+  return getTileAt(Coord(a, b));
+}
+
 void SigmarsGarden::setTile(const Coord &c, const Tile &t) {
   tiles[c] = t;
+}
+
+void SigmarsGarden::setTile(const int a, const int b, const TileType t) {
+  setTile(Coord(a, b), Tile(t));
+}
+
+void SigmarsGarden::setTile(const Coord &c, const TileType t) {
+  setTile(c, Tile(t));
+}
+
+void SigmarsGarden::setTile(const int a, const int b, const Tile &t) {
+  setTile(Coord(a, b), t);
 }
 
 // Returns a coord representing the ith adjacent cell. i=0 corresponds
@@ -78,6 +94,10 @@ bool SigmarsGarden::canMoveTile(const Coord &c) const {
   }
 
   return true;
+}
+
+bool SigmarsGarden::canMoveTile(const int a, const int b) const {
+  return canMoveTile(Coord(a, b));
 }
 
 std::vector<std::pair<Coord, Tile>> SigmarsGarden::getMoveableTiles() const {
