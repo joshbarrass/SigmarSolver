@@ -59,8 +59,23 @@ bool SigmarsGarden::canMoveTile(const Coord &c) const {
   for (size_t i = 0; i < 12; ++i) {
     if (freemap[i%6]) ++contiguous_free;
     else contiguous_free = 0;
-    if (contiguous_free >= 3) return true;
+    if (contiguous_free >= 3) break;
   }
 
-  return false;
+  if (contiguous_free < 3) return false;
+
+  // walk back through the metal sequence checking to see if it's
+  // present in the puzzle
+  TileType metal = get_prev_metal(t.type); // will be none if not a metal
+  while (metal != TILE_NONE) {
+    for (const auto &iter : tiles) {
+      // if this metal still exists in the puzzle, we can't remove
+      if (iter.second.type == metal && !iter.second.removed) {
+        return false;
+      }
+    }
+    metal = get_prev_metal(metal);
+  }
+
+  return true;
 }
