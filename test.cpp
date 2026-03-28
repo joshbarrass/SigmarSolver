@@ -36,10 +36,11 @@ int main() {
   std::cout << std::endl;
 
   sg.setTile(2, 0, TILE_QUICKSILVER);
-  const auto moveable = sg.getMoveableTiles();
+  auto moveable = sg.getMoveableTiles();
   std::cout << "Moveable tiles:" << std::endl;
   for (const auto tile : moveable) {
-    std::cout << "  (" << tile.first.a << "," << tile.first.b << ") " << tile.second.type << std::endl;
+    std::cout << "  (" << tile.first.a << "," << tile.first.b << ") "
+              << tile.second.type << std::endl;
   }
 
   std::cout << "Possible moves:" << std::endl;
@@ -47,8 +48,30 @@ int main() {
   for (const auto move : moves) {
     PlacedTile t1 = move.first;
     PlacedTile t2 = move.second;
-    std::cout << "  [(" << t1.first.a << "," << t1.first.b << ") " << t1.second.type << "] + ";
-    std::cout << "[(" << t2.first.a << "," << t2.first.b << ") " << t2.second.type << "]" << std::endl;
+    std::cout << "  [(" << t1.first.a << "," << t1.first.b << ") "
+              << t1.second.type << "] + ";
+    std::cout << "[(" << t2.first.a << "," << t2.first.b << ") "
+              << t2.second.type << "]" << std::endl;
+  }
+
+  sg.doMove(moves[0]);
+  std::cout << "Applied move 0" << std::endl;
+
+  moveable = sg.getMoveableTiles();
+  std::cout << "Moveable tiles:" << std::endl;
+  for (const auto tile : moveable) {
+    std::cout << "  (" << tile.first.a << "," << tile.first.b << ") "
+              << tile.second.type << std::endl;
+  }
+
+  sg.undoMove(moves[0]);
+  std::cout << "Reverted move 0" << std::endl;
+
+  moveable = sg.getMoveableTiles();
+  std::cout << "Moveable tiles:" << std::endl;
+  for (const auto tile : moveable) {
+    std::cout << "  (" << tile.first.a << "," << tile.first.b << ") "
+              << tile.second.type << std::endl;
   }
 
   return 0;
