@@ -36,6 +36,7 @@ public:
   void undoMove(const Move m);
 
   bool is_solved() const;
+  bool is_solveable() const;
 
   Solution solve() const;
 

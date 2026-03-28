@@ -1,4 +1,5 @@
 #include "puzzle.h"
+#include <iostream>
 
 bool SigmarsGarden::is_solved() const {
   for (const auto iter : tiles) {
@@ -7,6 +8,24 @@ bool SigmarsGarden::is_solved() const {
     }
   }
   return true;
+}
+
+bool SigmarsGarden::is_solveable() const {
+  std::unordered_map<TileType, int> tile_counts;
+  tile_counts[TILE_SALT] = 0;
+  for (const auto iter : tiles) {
+    if (TILE_SALT + iter.second.type)
+      ++tile_counts[iter.second.type];
+  }
+
+  int salts = tile_counts[TILE_SALT];
+  tile_counts.erase(TILE_SALT);
+  int salts_required = 0;
+  for (const auto iter : tile_counts) {
+    salts_required += iter.second % 2;
+  }
+
+  return salts >= salts_required;
 }
 
 Solution SigmarsGarden::solve() const {
@@ -31,6 +50,7 @@ Solution SigmarsGarden::solve() const {
 
 bool SigmarsGarden::solver_internal(std::stack<Move> &movestack) {
   if (is_solved()) return true;
+  if (!is_solveable()) return false;
   const auto moves = getAllPossibleMoves();
   for (const auto move : moves) {
     doMove(move);
