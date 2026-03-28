@@ -10,6 +10,8 @@ const std::unordered_map<TileType, std::string> tile_type_names{
     {TILE_FIRE, "FIRE"},
     {TILE_WATER, "WATER"},
     {TILE_EARTH, "EARTH"},
+    {TILE_LIFE, "LIFE"},
+    {TILE_DEATH, "DEATH"},
     {TILE_QUICKSILVER, "QUICKSILVER"},
     {TILE_LEAD, "LEAD"},
     {TILE_TIN, "TIN"},
@@ -76,11 +78,25 @@ bool types_can_match(const TileType t1, const TileType t2) {
     return t1 == TILE_QUICKSILVER;
   }
 
-  // if we reach here, neither is metal. Must be basic element, salt,
-  // or quicksilver.
+  // if we reach here, neither is metal. Must be basic element,
+  // life/death, salt, or quicksilver.
   // quicksilver only matches with metals
   if (t1 == TILE_QUICKSILVER || t2 == TILE_QUICKSILVER) {
     return false;
+  }
+
+  // life and death only match with their opposites
+  if (t1 == TILE_LIFE) {
+    return t2 == TILE_DEATH;
+  }
+  if (t2 == TILE_LIFE) {
+    return t1 == TILE_DEATH;
+  }
+  if (t1 == TILE_DEATH) {
+    return t2 == TILE_LIFE;
+  }
+  if (t2 == TILE_DEATH) {
+    return t1 == TILE_LIFE;
   }
 
   // otherwise, match valid if they're the same or if one of them is
