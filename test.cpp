@@ -1,4 +1,5 @@
 #include "puzzle.h"
+#include "tile_type.h"
 #include <iostream>
 
 int main() {
@@ -12,5 +13,8 @@ int main() {
   t = sg.getTileAt(Coord(0, 0));
   std::cout << "Tile: " << t.type << " " << t.removed << std::endl;
   std::cout << "Can move? " << sg.canMoveTile(Coord(0,0)) << std::endl;
+
+  std::cout << TILE_GOLD << " is metal? " << is_metal(TILE_GOLD) << std::endl;
+  std::cout << TILE_WATER << " is metal? " << is_metal(TILE_WATER) << std::endl;
   return 0;
 }

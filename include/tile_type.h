@@ -22,4 +22,6 @@ enum TileType {
 std::ostream &operator<<(std::ostream &os, TileType &t);
 std::ostream &operator<<(std::ostream &os, const TileType &t);
 
+bool is_metal(const TileType t);
+
 #endif

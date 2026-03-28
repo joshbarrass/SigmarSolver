@@ -1,5 +1,6 @@
 #include "tile_type.h"
 #include <unordered_map>
+#include <unordered_set>
 #include <string>
 
 const std::unordered_map<TileType, std::string> tile_type_names{
@@ -18,6 +19,8 @@ const std::unordered_map<TileType, std::string> tile_type_names{
     {TILE_GOLD, "GOLD"}
 };
 
+const std::unordered_set<TileType> metal_tiles {TILE_LEAD, TILE_TIN, TILE_IRON, TILE_COPPER, TILE_SILVER, TILE_GOLD};
+
 std::ostream &operator<<(std::ostream &os, TileType &t) {
   return operator<<(os, const_cast<const TileType &>(t));
 }
@@ -30,4 +33,8 @@ std::ostream &operator<<(std::ostream &os, const TileType &t) {
     os << s->second;
   }
   return os;
+}
+
+bool is_metal(const TileType t) {
+  return metal_tiles.count(t) == 1;
 }
