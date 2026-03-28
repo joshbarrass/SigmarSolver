@@ -2,6 +2,7 @@
 #define PUZZLE_H
 
 #include <unordered_map>
+#include <vector>
 #include "tile.h"
 
 class SigmarsGarden {
@@ -12,6 +13,7 @@ public:
 
   Tile getTileAt(const Coord &c) const;
   void setTile(const Coord &c, const Tile &t);
+  bool canMoveTile(const Coord &c) const;
 
 private:
   std::unordered_map<Coord, Tile> tiles;
