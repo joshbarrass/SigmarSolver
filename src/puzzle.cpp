@@ -100,8 +100,8 @@ bool SigmarsGarden::canMoveTile(const int a, const int b) const {
   return canMoveTile(Coord(a, b));
 }
 
-std::vector<std::pair<Coord, Tile>> SigmarsGarden::getMoveableTiles() const {
-  std::vector<std::pair<Coord, Tile>> moveable;
+std::vector<PlacedTile> SigmarsGarden::getMoveableTiles() const {
+  std::vector<PlacedTile> moveable;
   for (const auto tile : tiles) {
     const std::pair<Coord, Tile> t = tile;
     if (canMoveTile(t.first)) moveable.push_back(t);

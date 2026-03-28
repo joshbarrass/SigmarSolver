@@ -6,6 +6,8 @@
 #include <vector>
 #include "tile.h"
 
+typedef std::pair<Coord, Tile> PlacedTile;
+
 class SigmarsGarden {
 public:
   SigmarsGarden(){}
@@ -23,7 +25,7 @@ public:
   bool canMoveTile(const Coord &c) const;
   bool canMoveTile(const int a, const int b) const;
 
-  std::vector<std::pair<Coord, Tile>> getMoveableTiles() const;
+  std::vector<PlacedTile> getMoveableTiles() const;
 
 private:
   std::unordered_map<Coord, Tile> tiles;
