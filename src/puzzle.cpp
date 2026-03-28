@@ -130,16 +130,29 @@ std::vector<Move> SigmarsGarden::getAllPossibleMoves() const {
       }
     }
   }
+  // special exception for gold!
+  for (size_t i = 0; i < moveable.size(); ++i) {
+    if (moveable[i].second.type == TILE_GOLD) {
+      const Move move = Move(moveable[i],
+                             PlacedTile(moveable[i].first, Tile(TILE_NONE, false))
+                             );
+      moves.push_back(move);
+    }
+  }
 
   return moves;
 }
 
 void SigmarsGarden::doMove(const Move m) {
-  tiles[m.first.first].removed = true;
-  tiles[m.second.first].removed = true;
+  if (m.first.second.type != TILE_NONE)
+    tiles[m.first.first].removed = true;
+  if (m.second.second.type != TILE_NONE)
+    tiles[m.second.first].removed = true;
 }
 
 void SigmarsGarden::undoMove(const Move m) {
-  tiles[m.first.first].removed = false;
-  tiles[m.second.first].removed = false;
+  if (m.first.second.type != TILE_NONE)
+    tiles[m.first.first].removed = false;
+  if (m.second.second.type != TILE_NONE)
+    tiles[m.second.first].removed = false;
 }

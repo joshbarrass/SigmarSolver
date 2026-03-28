@@ -70,6 +70,19 @@ TileType get_next_metal(const TileType t) {
 }
 
 bool types_can_match(const TileType t1, const TileType t2) {
+  // gold is removed on its own
+  if (t1 == TILE_GOLD) {
+    if (t2 == TILE_NONE)
+      return true;
+    else
+      return false;
+  }
+  if (t2 == TILE_GOLD) {
+    if (t1 == TILE_NONE)
+      return true;
+    else
+      return false;
+  }
   // metal - quicksilver
   if (is_metal(t1)) {
     return t2 == TILE_QUICKSILVER;
