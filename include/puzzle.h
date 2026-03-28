@@ -7,6 +7,7 @@
 #include "tile.h"
 
 typedef std::pair<Coord, Tile> PlacedTile;
+typedef std::pair<PlacedTile, PlacedTile> Move;
 
 class SigmarsGarden {
 public:
@@ -26,6 +27,7 @@ public:
   bool canMoveTile(const int a, const int b) const;
 
   std::vector<PlacedTile> getMoveableTiles() const;
+  std::vector<Move> getAllPossibleMoves() const;
 
 private:
   std::unordered_map<Coord, Tile> tiles;

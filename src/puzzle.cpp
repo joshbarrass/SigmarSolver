@@ -108,3 +108,22 @@ std::vector<PlacedTile> SigmarsGarden::getMoveableTiles() const {
   }
   return moveable;
 }
+
+std::vector<Move> SigmarsGarden::getAllPossibleMoves() const {
+  std::vector<Move> moves;
+
+  const auto moveable = getMoveableTiles();
+
+  // loop through all pairs of tiles seeing whether they could be
+  // matched with each other. If they can, it's a valid move!
+  for (size_t i = 0; i < moveable.size(); ++i) {
+    for (size_t j = i + 1; j < moveable.size(); ++j) {
+      if (moveable[i].second.type + moveable[j].second.type) {
+        const Move move = Move(moveable[i], moveable[j]);
+        moves.push_back(move);
+      }
+    }
+  }
+
+  return moves;
+}

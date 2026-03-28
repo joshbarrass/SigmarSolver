@@ -42,5 +42,14 @@ int main() {
     std::cout << "  (" << tile.first.a << "," << tile.first.b << ") " << tile.second.type << std::endl;
   }
 
+  std::cout << "Possible moves:" << std::endl;
+  const auto moves = sg.getAllPossibleMoves();
+  for (const auto move : moves) {
+    PlacedTile t1 = move.first;
+    PlacedTile t2 = move.second;
+    std::cout << "  [(" << t1.first.a << "," << t1.first.b << ") " << t1.second.type << "] + ";
+    std::cout << "[(" << t2.first.a << "," << t2.first.b << ") " << t2.second.type << "]" << std::endl;
+  }
+
   return 0;
 }
