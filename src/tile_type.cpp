@@ -87,3 +87,7 @@ bool types_can_match(const TileType t1, const TileType t2) {
   // salt
   return t1 == t2 || t1 == TILE_SALT || t2 == TILE_SALT;
 }
+
+bool operator+(const TileType t1, const TileType t2) {
+  return types_can_match(t1, t2);
+}
