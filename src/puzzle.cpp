@@ -43,7 +43,7 @@ Coord get_adjacent_coord(const Coord &c, const int i) {
 
 bool SigmarsGarden::canMoveTile(const Coord &c) const {
   const Tile t = getTileAt(c);
-  if (t.type == TILE_NONE) return false;
+  if (t.removed || t.type == TILE_NONE) return false;
 
   // count number of contiguous free spaces
   // start by making a linear map of free spaces
@@ -78,4 +78,13 @@ bool SigmarsGarden::canMoveTile(const Coord &c) const {
   }
 
   return true;
+}
+
+std::vector<std::pair<Coord, Tile>> SigmarsGarden::getMoveableTiles() const {
+  std::vector<std::pair<Coord, Tile>> moveable;
+  for (const auto tile : tiles) {
+    const std::pair<Coord, Tile> t = tile;
+    if (canMoveTile(t.first)) moveable.push_back(t);
+  }
+  return moveable;
 }
