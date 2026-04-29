@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 #include <stack>
+#include <cstdint>
 #include "tile.h"
 
 typedef std::pair<Coord, Tile> PlacedTile;
@@ -44,6 +45,7 @@ private:
   bool solver_internal(std::stack<Move>&);
 
   std::unordered_map<Coord, Tile> tiles;
+  std::uint64_t moves_tried;
 };
 
 #endif

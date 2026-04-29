@@ -35,22 +35,32 @@ bool SigmarsGarden::is_solveable() const {
 }
 
 Solution SigmarsGarden::solve() const {
-  // seed the RNG
-  // CC BY-SA https://stackoverflow.com/a/42637679
-  rng.seed(std::chrono::system_clock::now().time_since_epoch().count());
+  bool solved;
+  std::stack<Move> movestack_final;
+  for (int trials = 0; trials < 30; ++trials) {
+    std::cout << "Trial" << trials+1 << std::endl;
+    // seed the RNG
+    // CC BY-SA https://stackoverflow.com/a/42637679
+    rng.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    // make a mutable copy
+    SigmarsGarden sg = SigmarsGarden(this);
+    sg.moves_tried = 0;
 
-  // make a mutable copy
-  SigmarsGarden sg = SigmarsGarden(this);
-
-  std::vector<Move> moves;
-  std::stack<Move> movestack;
-  const bool solved = sg.solver_internal(movestack);
+    std::stack<Move> movestack;
+    solved = sg.solver_internal(movestack);
+    if (solved) {
+      movestack_final = movestack;
+      std::cout << "Finished in " << sg.moves_tried << " moves" << std::endl;
+      break;
+    }
+  }
 
   // unwind the stack if solved
+  std::vector<Move> moves;
   if (solved) {
-    while (movestack.size() > 0) {
-      moves.insert(moves.begin(), movestack.top());
-      movestack.pop();
+    while (movestack_final.size() > 0) {
+      moves.insert(moves.begin(), movestack_final.top());
+      movestack_final.pop();
     }
   }
 
@@ -59,6 +69,8 @@ Solution SigmarsGarden::solve() const {
 }
 
 bool SigmarsGarden::solver_internal(std::stack<Move> &movestack) {
+  if (moves_tried >= 100000) return false;
+  ++moves_tried;
   if (is_solved()) return true;
   // if (!is_solveable()) return false;
   const auto moves = getAllPossibleMoves();
