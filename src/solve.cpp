@@ -37,7 +37,7 @@ bool SigmarsGarden::is_solveable() const {
 Solution SigmarsGarden::solve() const {
   bool solved;
   std::stack<Move> movestack_final;
-  for (int trials = 0; trials < 30; ++trials) {
+  for (int trials = 0; trials < 3000; ++trials) {
     std::cout << "Trial" << trials+1 << std::endl;
     // seed the RNG
     // CC BY-SA https://stackoverflow.com/a/42637679
@@ -69,7 +69,7 @@ Solution SigmarsGarden::solve() const {
 }
 
 bool SigmarsGarden::solver_internal(std::stack<Move> &movestack) {
-  if (moves_tried >= 100000) return false;
+  if (moves_tried >= 1000) return false;
   ++moves_tried;
   if (is_solved()) return true;
   // if (!is_solveable()) return false;
