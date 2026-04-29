@@ -2,7 +2,7 @@
 #define TILE_H
 
 #include <unordered_map>
-
+#include <cstddef>
 #include "tile_type.h"
 
 // Hexagonal coordinates

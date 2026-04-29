@@ -1,4 +1,4 @@
-#include <cstdint>
+#include <cstddef>
 #include "puzzle.h"
 
 SigmarsGarden::SigmarsGarden(const SigmarsGarden &sg) {
