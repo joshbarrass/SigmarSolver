@@ -9,7 +9,9 @@ bool SigmarsGarden::is_solved() const {
   }
   return true;
 }
-
+ 
+// TODO: optimise this to use information stored in the struct, rather
+// than recalculating O(N) every call
 bool SigmarsGarden::is_solveable() const {
   std::unordered_map<TileType, int> tile_counts;
   tile_counts[TILE_SALT] = 0;
@@ -50,7 +52,7 @@ Solution SigmarsGarden::solve() const {
 
 bool SigmarsGarden::solver_internal(std::stack<Move> &movestack) {
   if (is_solved()) return true;
-  if (!is_solveable()) return false;
+  // if (!is_solveable()) return false;
   const auto moves = getAllPossibleMoves();
   for (const auto move : moves) {
     doMove(move);
