@@ -1,6 +1,7 @@
 #include "puzzle.h"
 #include <iostream>
 #include <random>
+#include <chrono>
 
 std::default_random_engine rng;
 
@@ -34,6 +35,10 @@ bool SigmarsGarden::is_solveable() const {
 }
 
 Solution SigmarsGarden::solve() const {
+  // seed the RNG
+  // CC BY-SA https://stackoverflow.com/a/42637679
+  rng.seed(std::chrono::system_clock::now().time_since_epoch().count());
+
   // make a mutable copy
   SigmarsGarden sg = SigmarsGarden(this);
 
