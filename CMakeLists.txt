@@ -34,3 +34,5 @@ set_target_properties(sigmarsolver PROPERTIES PREFIX "lib")
 # build test binary
 add_executable(test test.cpp ${headers})
 target_link_libraries(test sigmarsolver)
+add_executable(test2 test2.cpp ${headers})
+target_link_libraries(test2 sigmarsolver)
