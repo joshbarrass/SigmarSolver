@@ -1,5 +1,8 @@
 #include "puzzle.h"
 #include <iostream>
+#include <random>
+
+std::default_random_engine rng;
 
 bool SigmarsGarden::is_solved() const {
   for (const auto iter : tiles) {
@@ -54,7 +57,11 @@ bool SigmarsGarden::solver_internal(std::stack<Move> &movestack) {
   if (is_solved()) return true;
   // if (!is_solveable()) return false;
   const auto moves = getAllPossibleMoves();
-  for (const auto move : moves) {
+  std::size_t size = moves.size();
+  std::uniform_int_distribution<int> distribution(0,size-1);
+  std::size_t start_index = distribution(rng);
+  for (std::size_t i = 0; i < size; ++i) {
+    const Move move = moves[(start_index+i)%size];
     doMove(move);
     movestack.push(move);
     bool solved = solver_internal(movestack);
