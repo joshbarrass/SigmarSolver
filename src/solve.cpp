@@ -1,5 +1,4 @@
 #include "puzzle.h"
-#include <iostream>
 #include <random>
 #include <chrono>
 
@@ -38,7 +37,6 @@ Solution SigmarsGarden::solve() const {
   bool solved;
   std::stack<Move> movestack_final;
   for (int trials = 0; trials < 3000; ++trials) {
-    std::cout << "Trial" << trials+1 << std::endl;
     // seed the RNG
     // CC BY-SA https://stackoverflow.com/a/42637679
     rng.seed(std::chrono::system_clock::now().time_since_epoch().count());
@@ -50,7 +48,6 @@ Solution SigmarsGarden::solve() const {
     solved = sg.solver_internal(movestack);
     if (solved) {
       movestack_final = movestack;
-      std::cout << "Finished in " << sg.moves_tried << " moves" << std::endl;
       break;
     }
   }
