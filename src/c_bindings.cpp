@@ -14,9 +14,9 @@ extern "C" {
   }
 
   void sigmarsgarden_setTile(void *p, const int a, const int b,
-                             const unsigned int type) {
+                             const TileType type) {
     SigmarsGarden *sg = (SigmarsGarden *)p;
-    sg->setTile(a, b, (const TileType)type);
+    sg->setTile(a, b, type);
   }
 
   SigmarSolution *sigmarsgarden_solve(const void *p) {

@@ -43,7 +43,7 @@ typedef struct {
   void *sigmarsgarden_init();
   void sigmarsgarden_free(void*);
 
-  void sigmarsgarden_setTile(void *p, const int a, const int b, const unsigned int type);
+  void sigmarsgarden_setTile(void *p, const int a, const int b, const TileType type);
 
   void sigmarsolution_free(SigmarSolution*);
   SigmarSolution *sigmarsgarden_solve(const void*);
