@@ -4,7 +4,7 @@
 #include <ostream>
 
 enum TileType {
-  TILE_NONE,
+  TILE_NONE = 0,
   TILE_SALT,
   TILE_AIR,
   TILE_FIRE,

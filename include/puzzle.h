@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 #include <stack>
+#include <cstddef>
 #include <cstdint>
 #include "tile.h"
 
@@ -17,6 +18,7 @@ public:
   SigmarsGarden(){}
   SigmarsGarden(const SigmarsGarden &sg);
   SigmarsGarden(const SigmarsGarden *sg);
+  SigmarsGarden(const void *buf);
   ~SigmarsGarden();
 
   Tile getTileAt(const Coord &c) const;
@@ -40,6 +42,8 @@ public:
   bool is_solveable() const;
 
   Solution solve() const;
+
+  std::size_t serialise(const std::size_t bufsize, void *buf);
 
 private:
   bool solver_internal(std::stack<Move>&);
