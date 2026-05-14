@@ -40,14 +40,29 @@ typedef struct {
   SigmarMove moves[];
 } SigmarSolution;
 
+  // Allocates and returns a pointer to an opaque solver instance. The
+  // caller is responsible for freeing it with sigmarsgarden_free.
   void *sigmarsgarden_init();
+
+  // Frees a solver created by sigmarsgarden_init.
   void sigmarsgarden_free(void*);
 
+  // Sets a single tile in a solver instance.
   void sigmarsgarden_setTile(void *p, const int a, const int b, const TileType type);
 
-  void sigmarsolution_free(SigmarSolution*);
+  // Solves the puzzle. Returns a SigmarSolution allocated on the
+  // heap. The caller is responsible for freeing it with
+  // sigmarsolution_free. If the puzzle cannot be solved, returns
+  // NULL.
   SigmarSolution *sigmarsgarden_solve(const void*);
 
+  // Frees a SigmarSolution created by sigmarsgarden_solve.
+  void sigmarsolution_free(SigmarSolution*);
+
+  // Returns the human-readable tile type name for a given
+  // TileType. If the TileType is unrecognised, returns "UNKNOWN". All
+  // strings are statically-allocated and shared, and should never be
+  // modified.
   const char *sigmarsgarden_getTypeName(const TileType t);
 
 #endif
