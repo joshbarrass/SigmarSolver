@@ -43,7 +43,8 @@ public:
 
   Solution solve() const;
 
-  std::size_t serialise(const std::size_t bufsize, void *buf);
+  std::size_t serialise(const std::size_t bufsize, void *buf) const;
+  std::size_t serialise_required_buf_size() const;
 
 private:
   bool solver_internal(std::stack<Move>&);

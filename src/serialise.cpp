@@ -15,10 +15,14 @@ typedef struct __attribute__((packed)) {
   SerialisedTile tiles[];
 } SerialisedPuzzle;
 
-std::size_t
-SigmarsGarden::serialise(const std::size_t bufsize, void *buf) {
+std::size_t SigmarsGarden::serialise_required_buf_size() const {
   const std::size_t num_tiles = tiles.size();
-  const std::size_t bytes_required = sizeof(SerialisedPuzzle) + num_tiles*sizeof(SerialisedTile);
+  return sizeof(SerialisedPuzzle) + num_tiles*sizeof(SerialisedTile);
+}
+
+std::size_t
+SigmarsGarden::serialise(const std::size_t bufsize, void *buf) const {
+  const std::size_t bytes_required = serialise_required_buf_size();
   if (bytes_required > bufsize) {
     return 0;
   }
@@ -26,7 +30,7 @@ SigmarsGarden::serialise(const std::size_t bufsize, void *buf) {
   // build the serialisation
   SerialisedPuzzle *output = (SerialisedPuzzle*)buf;
   output->magic_number = MAGIC_NUMBER;
-  output->num_tiles = num_tiles;
+  output->num_tiles = tiles.size();
 
   std::size_t i = 0;
   for (const auto iter : tiles) {
