@@ -1,5 +1,6 @@
 import ctypes
 from enum import IntEnum
+import os, sys
 
 class TileType(IntEnum):
     NONE = 0
@@ -83,7 +84,14 @@ class SigmarsGarden:
             return None
         return ctypes.cast(sol, ctypes.POINTER(SigmarSolution)).contents
 
-_LIB = ctypes.cdll.LoadLibrary("./libsigmarsolver.so")
+_LIBDIR = os.path.join(os.path.dirname(__file__), "lib")
+if sys.platform == "linux":
+    _LIBNAME = "libsigmarsolver.so"
+else:
+    raise RuntimeError("unknown platform -- cannot find library")
+_LIBPATH = os.path.join(_LIBDIR, _LIBNAME)
+
+_LIB = ctypes.cdll.LoadLibrary(_LIBPATH)
 
 # Build the function prototypes
 # void *sigmarsgarden_init();
