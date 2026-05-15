@@ -59,4 +59,4 @@ sg.setTile(2, -4, TileType.AIR)
 sg.setTile(3, -5, TileType.FIRE)
 
 for i, move in enumerate(sg.solve()):
-    print(f"  {i}) [({move.a1}, {move.b1}) {TileType(move.t1).name}] <-> [({move.a2}, {move.b2}) {TileType(move.t2).name}]")
+    print(f"{i:3d}) [{move.coord1} {TileType(move.t1).name}] <-> [{move.coord2} {TileType(move.t2).name}]")

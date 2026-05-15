@@ -32,6 +32,14 @@ class SigmarMove(ctypes.Structure):
         return f"SigmarMove(a1={self.a1}, b1={self.b1}, t1={self.t1}, "+\
                           f"a2={self.a2}, b2={self.b2}, t2={self.t2})"
 
+    @property
+    def coord1(self):
+        return (self.a1, self.b1)
+
+    @property
+    def coord2(self):
+        return (self.a2, self.b2)
+
 class SigmarSolution(ctypes.Structure):
     _fields_ = [
         ("n_moves", ctypes.c_uint),
