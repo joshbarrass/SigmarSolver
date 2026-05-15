@@ -11,7 +11,7 @@ description="Python bindings for libsigmarsolver"
 authors = [
   { name = "Joshua Barrass", email = "josh.barrass.work@gmail.com" },
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.8"
 
 [tool.scikit-build]
 minimum-version = "build-system.requires"
