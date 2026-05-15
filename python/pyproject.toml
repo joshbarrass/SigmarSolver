@@ -15,3 +15,4 @@ requires-python = ">=3.6"
 
 [tool.scikit-build]
 minimum-version = "build-system.requires"
+wheel.packages = ["sigmarsolver"]

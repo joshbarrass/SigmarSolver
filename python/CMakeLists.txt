@@ -11,5 +11,4 @@ add_subdirectory(.. lib_build)
 # directory, so all paths are relative to that. The library
 # built by the parent project is installed to /lib, and we
 # manually install the binding to the wheel root.
-install(TARGETS sigmarsolver LIBRARY DESTINATION lib)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/sigmarsolver.py DESTINATION .)
+install(TARGETS sigmarsolver LIBRARY DESTINATION sigmarsolver/lib)
