@@ -19,12 +19,14 @@ jobs:
       - name: Prepare Environment
         run: echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> ${GITHUB_ENV}
 
-      - name: Build Library
+      - name: Configure CMake
         run: |
-          mkdir -p build/linux
-          cmake -B build/linux -DCMAKE_BUILD_TYPE=Release .
-          cd build/linux
-          make -j8
+          rm -rf build
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release .
+
+      - name: Build
+        run: |
+          cmake --build build
 
       - name: Upload Library
         env:
