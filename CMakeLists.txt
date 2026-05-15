@@ -29,8 +29,6 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.h)
 # build library
 add_library(sigmarsolver SHARED ${sources} ${headers})
 set_property(TARGET sigmarsolver PROPERTY POSITION_INDEPENDENT_CODE ON)
-set_target_properties(sigmarsolver PROPERTIES PREFIX "lib")
-#target_link_libraries(sigmarsolver)
 
 # build test binaries
 OPTION(BUILD_TEST_BINARIES "Build test binaries" OFF)
