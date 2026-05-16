@@ -19,7 +19,7 @@ jobs:
         shell: bash
         run: gh release create --repo "${{ github.repository}}" --draft --title ${{ github.ref_name }} ${{ github.ref_name }}
 
-  build:
+  build_shared:
     needs: create_release
     strategy:
       matrix:
@@ -36,15 +36,11 @@ jobs:
             libname: "sigmarsolver.dll"
             linkfile: "sigmarsolver.lib"
 
-    name: ${{ matrix.jobname }}
+    name: Build Library (${{ matrix.jobname }})
     runs-on: ${{ matrix.os }}
     steps:
       - name: Clone Repository
         uses: actions/checkout@v6
-
-      - name: Prepare Environment
-        shell: bash
-        run: echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> ${GITHUB_ENV}
 
       - name: Configure CMake
         shell: bash
@@ -82,3 +78,36 @@ jobs:
         shell: bash
         run: |
           gh release upload ${{ github.ref_name }} build/${{ matrix.buildsubdir }}${{ matrix.linkfile }}
+
+  build_python:
+    needs: create_release
+    strategy:
+      matrix:
+        os: ["ubuntu-22.04", "windows-2025"]
+        include:
+          - os: "ubuntu-22.04"
+            jobname: "Linux"
+          - os: "windows-2025"
+            jobname: "Windows"
+
+    name: Build Python Wheel (${{ matrix.jobname }})
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.8"
+
+      - name: Build Wheel
+        run: |
+          pip wheel ./python/
+
+      - name: Upload Wheel
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          gh release upload ${{ github.ref_name }} ./*.whl
