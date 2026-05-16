@@ -9,20 +9,32 @@ permissions:
   contents: write  #  for release creation (svenstaro/upload-release-action)
 
 jobs:
-  linux:
-    name: Linux
-    runs-on: ubuntu-22.04
+  build:
+    strategy:
+      matrix:
+        os: ["ubuntu-22.04", "windows-2025"]
+        include:
+          - os: "ubuntu-22.04"
+            jobname: "Linux"
+            libname: "libsigmarsolver.so"
+          - os: "windows-2025"
+            jobname: "Windows"
+            libname: "sigmarsolver.dll"
+    name: ${{ matrix.jobname }}
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Clone Repository
         uses: actions/checkout@v6
 
       - name: Prepare Environment
+        shell: bash
         run: echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> ${GITHUB_ENV}
 
       - name: Configure CMake
+        shell: bash
         run: |
           rm -rf build
-          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release .
+          cmake -B build -DCMAKE_BUILD_TYPE=Release .
 
       - name: Build
         run: |
@@ -34,4 +46,4 @@ jobs:
         shell: bash
         run: |
           gh release create --draft --title ${{ github.ref_name }} ${{ github.ref_name }}
-          gh release upload ${{ github.ref_name }} build/libsigmarsolver.so
+          gh release upload ${{ github.ref_name }} build/${{ matrix.libname }}
