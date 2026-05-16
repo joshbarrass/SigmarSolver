@@ -85,10 +85,12 @@ class SigmarsGarden:
         return ctypes.cast(sol, ctypes.POINTER(SigmarSolution)).contents
 
 _LIBDIR = os.path.join(os.path.dirname(__file__), "lib")
-if sys.platform == "linux":
+if sys.platform == "win32":
+    _LIBNAME = "sigmarsolver.dll"
+elif sys.platform == "darwin":
+    _LIBNAME = "libsigmarsolver.dylib"
+else: # assume Linux convention on other platforms
     _LIBNAME = "libsigmarsolver.so"
-else:
-    raise RuntimeError("unknown platform -- cannot find library")
 _LIBPATH = os.path.join(_LIBDIR, _LIBNAME)
 
 _LIB = ctypes.cdll.LoadLibrary(_LIBPATH)
