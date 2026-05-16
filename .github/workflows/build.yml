@@ -9,7 +9,18 @@ permissions:
   contents: write  #  for release creation (svenstaro/upload-release-action)
 
 jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    name: Create Release
+    steps:
+      - name: Create Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: gh release create --repo "${{ github.repository}}" --draft --title ${{ github.ref_name }} ${{ github.ref_name }}
+
   build:
+    needs: create_release
     strategy:
       matrix:
         os: ["ubuntu-22.04", "windows-2025"]
@@ -45,5 +56,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
-          gh release create --draft --title ${{ github.ref_name }} ${{ github.ref_name }}
           gh release upload ${{ github.ref_name }} build/${{ matrix.libname }}
