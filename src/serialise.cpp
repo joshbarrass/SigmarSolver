@@ -1,19 +1,29 @@
 #include <stdexcept>
 #include "puzzle.h"
 
+// portable way of packing the struct
+// https://stackoverflow.com/a/3312896
+#ifdef __GNUC__
+#define PACK( __Declaration__ ) __Declaration__ __attribute__((__packed__))
+#endif
+
+#ifdef _MSC_VER
+#define PACK( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop))
+#endif
+
 constexpr std::uint16_t MAGIC_NUMBER = 0x4F01;
 
-typedef struct __attribute__((packed)) {
+typedef PACK(struct {
   std::int16_t a;
   std::int16_t b;
   std::uint8_t type;
-} SerialisedTile;
+}) SerialisedTile;
 
-typedef struct __attribute__((packed)) {
+typedef PACK(struct {
   std::uint16_t magic_number;
   std::uint32_t num_tiles;
   SerialisedTile tiles[];
-} SerialisedPuzzle;
+}) SerialisedPuzzle;
 
 std::size_t SigmarsGarden::serialise_required_buf_size() const {
   const std::size_t num_tiles = tiles.size();
