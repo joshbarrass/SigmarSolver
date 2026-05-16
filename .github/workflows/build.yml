@@ -26,6 +26,7 @@ jobs:
         os: ["ubuntu-22.04", "windows-2025"]
         include:
           - buildsubdir: ""
+          - linkfile: ""
           - os: "ubuntu-22.04"
             jobname: "Linux"
             libname: "libsigmarsolver.so"
@@ -33,6 +34,8 @@ jobs:
             jobname: "Windows"
             buildsubdir: "Release/"
             libname: "sigmarsolver.dll"
+            linkfile: "sigmarsolver.lib"
+
     name: ${{ matrix.jobname }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -71,3 +74,11 @@ jobs:
         shell: bash
         run: |
           gh release upload ${{ github.ref_name }} build/${{ matrix.buildsubdir }}${{ matrix.libname }}
+
+      - name: Upload Extras
+        if: matrix.linkfile != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          gh release upload ${{ github.ref_name }} build/${{ matrix.buildsubdir }}${{ matrix.linkfile }}
