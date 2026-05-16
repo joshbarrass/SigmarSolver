@@ -30,7 +30,7 @@ jobs:
             libname: "libsigmarsolver.so"
           - os: "windows-2025"
             jobname: "Windows"
-            libname: "sigmarsolver.dll"
+            libname: "Release/sigmarsolver.dll"
     name: ${{ matrix.jobname }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -49,7 +49,7 @@ jobs:
 
       - name: Build
         run: |
-          cmake --build build
+          cmake --build build --config Release
 
       - name: Upload Library
         env:
