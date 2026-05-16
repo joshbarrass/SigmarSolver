@@ -106,6 +106,7 @@ int main() {
     }
   } else {
     cout << "Solver failed!" << endl;
+    return 1;
   }
 
   return 0;

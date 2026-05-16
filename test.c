@@ -64,6 +64,8 @@ int main() {
 
   const SigmarSolution *sol = sigmarsgarden_solve(sg);
 
+  if (sol == NULL) return 1;
+
   for (size_t i = 0; i < sol->n_moves; ++i) {
     const SigmarMove *m = &sol->moves[i];
     printf("  %zu) [(%d, %d) %s] <-> [(%d, %d) %s]\n", i+1, m->a1, m->b1, sigmarsgarden_getTypeName(m->t1), m->a2, m->b2, sigmarsgarden_getTypeName(m->t2));
