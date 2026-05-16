@@ -8,12 +8,13 @@
 #include <cstddef>
 #include <cstdint>
 #include "tile.h"
+#include "dllexport.h"
 
 typedef std::pair<Coord, Tile> PlacedTile;
 typedef std::pair<PlacedTile, PlacedTile> Move;
 typedef std::pair<bool, std::vector<Move>> Solution;
 
-class SigmarsGarden {
+class EXPORT SigmarsGarden {
 public:
   SigmarsGarden(){}
   SigmarsGarden(const SigmarsGarden &sg);
