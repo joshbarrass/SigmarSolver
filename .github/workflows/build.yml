@@ -33,4 +33,5 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
-          gh release upload ${{ github.ref_name }} build/linux/libsigmarsolver.so
+          gh release create --draft --title ${{ github.ref_name }} ${{ github.ref_name }}
+          gh release upload ${{ github.ref_name }} build/libsigmarsolver.so
