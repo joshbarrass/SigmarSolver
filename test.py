@@ -1,3 +1,4 @@
+import sys
 from sigmarsolver import SigmarsGarden, TileType
 
 sg = SigmarsGarden()
@@ -58,5 +59,10 @@ sg.setTile(3, -4, TileType.AIR)
 sg.setTile(2, -4, TileType.AIR)
 sg.setTile(3, -5, TileType.FIRE)
 
-for i, move in enumerate(sg.solve()):
+sol = sg.solve()
+if not sol:
+    print("Failed to solve!")
+    sys.exit(1)
+
+for i, move in enumerate(sol):
     print(f"{i:3d}) [{move.coord1} {TileType(move.t1).name}] <-> [{move.coord2} {TileType(move.t2).name}]")

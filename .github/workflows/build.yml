@@ -105,6 +105,22 @@ jobs:
         run: |
           pip wheel ./python/
 
+      - name: Install Wheel
+        shell: bash
+        run: |
+          pip install ./*.whl
+
+      - name: Run Tests
+        shell: bash
+        run: |
+          shopt -s nullglob
+          for test in ./test*.py; do
+            if [ -f "$test" ]; then
+              echo "Running $test..."
+              python "$test" || exit 1
+            fi
+          done
+
       - name: Upload Wheel
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
