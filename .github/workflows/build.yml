@@ -25,12 +25,14 @@ jobs:
       matrix:
         os: ["ubuntu-22.04", "windows-2025"]
         include:
+          - buildsubdir: ""
           - os: "ubuntu-22.04"
             jobname: "Linux"
             libname: "libsigmarsolver.so"
           - os: "windows-2025"
             jobname: "Windows"
-            libname: "Release/sigmarsolver.dll"
+            buildsubdir: "Release/"
+            libname: "sigmarsolver.dll"
     name: ${{ matrix.jobname }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -45,15 +47,27 @@ jobs:
         shell: bash
         run: |
           rm -rf build
-          cmake -B build -DCMAKE_BUILD_TYPE=Release .
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TEST_BINARIES=ON .
 
       - name: Build
         run: |
           cmake --build build --config Release
+
+      - name: Run Tests
+        shell: bash
+        run: |
+          cd build/${{ matrix.buildsubdir }}
+          shopt -s nullglob
+          for test in ./test*; do
+            if [ -x "$test" ] && [ -f "$test" ]; then
+              echo "Running $test..."
+              "$test" || exit 1
+            fi
+          done
 
       - name: Upload Library
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
-          gh release upload ${{ github.ref_name }} build/${{ matrix.libname }}
+          gh release upload ${{ github.ref_name }} build/${{ matrix.buildsubdir }}${{ matrix.libname }}
